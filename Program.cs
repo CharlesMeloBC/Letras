@@ -1,6 +1,5 @@
 using Letrasdemusicas.Data;
 using Letrasdemusicas.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +44,18 @@ app.MapPost("/musicas", async (Musica musica, AppDbContext dbContext) =>
     dbContext.Musicas.Add(musica);
     await dbContext.SaveChangesAsync();
     return Results.Created($"/musicas/{musica.Id}", musica);
+});
+
+app.MapDelete("/musicas/{Id}", async (int Id, AppDbContext db) =>
+{
+    if (await db.Musicas.FindAsync(Id) is Musica musica)
+    {
+        db.Musicas.Remove(musica);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+
+    return Results.NotFound();
 });
 
 app.Run();
