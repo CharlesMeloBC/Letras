@@ -1,11 +1,13 @@
-﻿namespace Letrasdemusicas.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Letrasdemusicas.Models
 {
     public class Musica
     {
-        public string Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Letra { get; set; }
+        public int Id { get; set; }
+        
+        public required string Name { get; set; }
+     
+        public required string Letra { get; set; }
     }
 }
