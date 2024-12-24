@@ -1,5 +1,6 @@
 using Letrasdemusicas.Data;
 using Letrasdemusicas.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,35 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "API está funcionando!");
+app.MapGet("/musicas", async (AppDbContext dbContext) =>
+{
+    var musicas = await dbContext.Musicas.ToListAsync();
+    return Results.Ok(musicas);
+});
+
+app.MapGet("/musicas/{Id:int}", async(int Id, AppDbContext dbContext) =>
+{
+    var findMusic = await dbContext.Musicas.FindAsync(Id);
+    if (findMusic == null)  
+    {
+        return Results.NotFound("Musica não cadastrada");
+    }
+       return Results.Ok(findMusic); 
+});
+
+app.MapGet("/musicas/{musicasFiltradas}", async(string musicasFiltradas, AppDbContext dbContext) => 
+{
+    var search = await dbContext.Musicas
+    .Where(m => m.Name.ToLower().Contains(musicasFiltradas) || m.Letra.ToLower().Contains(musicasFiltradas))
+    .ToListAsync();
+
+if (!search.Any())
+   
+   {
+    return Results.NotFound(new {Message = "Musica não cadastrada" });
+   }
+    return Results.Ok(search);
+});
 
 app.MapPost("/musicas", async (Musica musica, AppDbContext dbContext) =>
 {
