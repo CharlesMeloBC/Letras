@@ -49,7 +49,16 @@ Para buscar os objestos cadastrados "Musicas", você pode estar usando o endpoin
 ```
 https://[seu host:0000]/musicas/[Nome da canção]
 ```
-**ou**
+```
+https://[seu host:0000]/musicas/[ID]
+```
 ```
 https://[seu host:0000]/musicas/[Palavras ou frases contidas na canção]
+```
+---
+### DELETE 🗑️
+**1º Passo**
+Para fazer a deleção de qualquer objeto cadastrado no banco basta informa o ID no endpoint:
+```
+https://[seu host:0000]/musicas/[ID]
 ```
