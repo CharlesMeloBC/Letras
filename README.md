@@ -13,13 +13,25 @@ https://github.com/CharlesMeloBC/Letras.git
 **2º Passo**
 Baixe as dependencias e pacotes da aplicação necessarios para conexão com seu banco de dados:
 eu usei o SQL Server 
+
+```
+https://www.microsoft.com/pt-br/sql-server/sql-server-downloads
+```
+No Visual Studio baixe os seguintes pacotes do entity para fazer a comunicação com o SQL Server
 ```
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```
-
 **3º Passo**
+configure sua Connection string exemplo:
+```
+  "ConnectionStrings": {
+    "DefaultConetion": "Server=DESKTOP[host do seu server];Database=LetrasDeMusicas;Trusted_Connection=True;TrustServerCertificate=True"
+  },
+```
+
+**4º Passo**
 faça a ``migration`` para poder criar as tabelas no SQL Server 
 ```
 dotnet ef migrations add [O NOME DE SUA TABELA]
